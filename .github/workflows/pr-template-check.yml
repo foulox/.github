@@ -1,0 +1,31 @@
+name: PR template check
+
+on:
+  workflow_call:
+
+jobs:
+  check-body:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check required PR template sections
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          body="$PR_BODY"
+          missing=()
+          grep -q '^## Summary' <<<"$body" || missing+=("## Summary")
+          grep -q '^## Test plan' <<<"$body" || missing+=("## Test plan")
+          grep -q '^### Verified by Claude (automated)' <<<"$body" || missing+=("### Verified by Claude (automated)")
+
+          if grep -q '^### Please verify manually (Lou)' <<<"$body"; then
+            echo "::notice::Manual-verification subsection present"
+          else
+            echo "::notice::Manual-verification subsection omitted (allowed for docs-only/refactor PRs)"
+          fi
+
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::warning::Missing required sections: ${missing[*]}"
+            exit 1
+          fi
+
+          echo "All required sections present"
