@@ -13,11 +13,11 @@ jobs:
         run: |
           body="$PR_BODY"
           missing=()
-          grep -q '^## Summary' <<<"$body" || missing+=("## Summary")
-          grep -q '^## Test plan' <<<"$body" || missing+=("## Test plan")
-          grep -q '^### Verified by Claude (automated)' <<<"$body" || missing+=("### Verified by Claude (automated)")
+          grep -qE '^## Summary[[:space:]]*$' <<<"$body" || missing+=("## Summary")
+          grep -qE '^## Test plan[[:space:]]*$' <<<"$body" || missing+=("## Test plan")
+          grep -qE '^### Verified by Claude \(automated\)[[:space:]]*$' <<<"$body" || missing+=("### Verified by Claude (automated)")
 
-          if grep -q '^### Please verify manually (Lou)' <<<"$body"; then
+          if grep -qE '^### Please verify manually \(Lou\)[[:space:]]*$' <<<"$body"; then
             echo "::notice::Manual-verification subsection present"
           else
             echo "::notice::Manual-verification subsection omitted (allowed for docs-only/refactor PRs)"
