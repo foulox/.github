@@ -23,6 +23,7 @@ assignees: ''
 ---
 
 ## Implementation Plan
-<!-- Produced by superpowers:writing-plans and pasted here by the PUBLISH step:
-     Goal (one line), Architecture, Tech Stack, Global Constraints, and the
-     per-task TDD breakdown (files, interfaces, steps). Do not hand-fill. -->
+<!-- This is the writing-plans task-by-task TDD breakdown: Goal (one line), Architecture,
+     Tech Stack, Global Constraints, and per-task Files/Interfaces/Steps.
+     Pasted here by the PUBLISH step after local approval in docs/superpowers/plans/.
+     Not a hand-written sketch or grooming effort — do not fill by hand. -->
