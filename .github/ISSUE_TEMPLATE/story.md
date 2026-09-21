@@ -20,6 +20,11 @@ assignees: ''
 ## Performance impact
 [None | brief description of how this affects load time, API calls, or UX responsiveness.]
 
+## Open questions
+<!-- Populate at draft-capture time: what isn't known yet, what might block
+     grooming. Resolve or empty these before setting up-next. Omit the section
+     (or leave it empty) for fully groomed stories. -->
+
 ---
 
 ## Implementation Plan
