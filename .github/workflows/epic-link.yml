@@ -1,0 +1,35 @@
+name: Epic link
+
+on:
+  workflow_call:
+
+permissions:
+  issues: write
+
+jobs:
+  link:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Link story to epic via Epic line in body
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          EPIC=$(printf '%s' "$ISSUE_BODY" | grep -oE '^Epic: #[0-9]+' | grep -oE '[0-9]+' | head -1 || true)
+          if [[ -z "$EPIC" ]]; then
+            echo "No 'Epic: #N' line found in body — skipping"
+            exit 0
+          fi
+          STORY_ID=$(gh api "repos/$REPO/issues/$ISSUE_NUMBER" -q .id)
+          output=$(gh api "repos/$REPO/issues/$EPIC/sub_issues" \
+            -X POST -F "sub_issue_id=$STORY_ID" 2>&1) && status=0 || status=$?
+          if [[ $status -eq 0 ]]; then
+            echo "Linked #$ISSUE_NUMBER to epic #$EPIC ✓"
+          elif echo "$output" | grep -qi "may only have one parent\|already.*parent"; then
+            echo "Story #$ISSUE_NUMBER already has a parent — skipping ✓"
+          else
+            echo "Error linking #$ISSUE_NUMBER to epic #$EPIC: $output" >&2
+            exit 1
+          fi
