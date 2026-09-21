@@ -27,8 +27,6 @@ jobs:
             echo "PR body already links issue #${ISSUE} ✓"
             exit 0
           fi
-          NEW_BODY="${PR_BODY}
-
-          Closes #${ISSUE}"
+          NEW_BODY=$(printf '%s\n\nCloses #%s' "$PR_BODY" "$ISSUE")
           gh api "repos/$REPO/pulls/$PR_NUMBER" -X PATCH -f "body=$NEW_BODY"
           echo "Injected 'Closes #${ISSUE}' into PR #${PR_NUMBER} ✓"

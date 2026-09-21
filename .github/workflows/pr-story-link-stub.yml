@@ -6,4 +6,4 @@ on:
 
 jobs:
   link:
-    uses: foulox/.github/.github/workflows/pr-story-link.yml@main
+    uses: ./.github/workflows/pr-story-link.yml
