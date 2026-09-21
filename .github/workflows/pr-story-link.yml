@@ -23,12 +23,12 @@ jobs:
             exit 0
           fi
           ISSUE="${BASH_REMATCH[1]}"
-          if echo "$PR_BODY" | grep -iqE "(closes|fixes|resolves)[[:space:]]+#${ISSUE}[^0-9]|#${ISSUE}$"; then
+          if echo "$PR_BODY" | grep -iqE "(closes|fixes|resolves)[[:space:]]+#${ISSUE}([^0-9]|$)"; then
             echo "PR body already links issue #${ISSUE} ✓"
             exit 0
           fi
           NEW_BODY="${PR_BODY}
 
           Closes #${ISSUE}"
-          gh api "repos/$REPO/pulls/$PR_NUMBER" -X PATCH -F "body=$NEW_BODY"
+          gh api "repos/$REPO/pulls/$PR_NUMBER" -X PATCH -f "body=$NEW_BODY"
           echo "Injected 'Closes #${ISSUE}' into PR #${PR_NUMBER} ✓"
