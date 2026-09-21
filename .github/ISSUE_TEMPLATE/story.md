@@ -28,6 +28,6 @@ assignees: ''
 ---
 
 ## Implementation Plan
-<!-- Produced by superpowers:writing-plans and pasted here by the PUBLISH step:
-     Goal (one line), Architecture, Tech Stack, Global Constraints, and the
-     per-task TDD breakdown (files, interfaces, steps). Do not hand-fill. -->
+<!-- Plan: docs/superpowers/plans/YYYY-MM-DD-story-N-slug.md @ <commit-SHA>
+     The plan file is the first commit on the story's build branch; the link
+     resolves permanently at merge. Do not paste the plan content here. -->
